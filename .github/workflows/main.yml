@@ -41,6 +41,8 @@ jobs:
           TF_VAR_datasource_url: ${{ secrets.DATASOURCE_URL }}
           TF_VAR_datasource_username: ${{ secrets.DATASOURCE_USERNAME }}
           TF_VAR_datasource_password: ${{ secrets.DATASOURCE_PASSWORD }}
+          TF_VAR_mp_webhook: ${{ secrets.MP_WEBHOOK }}
+          TF_VAR_mp_token: ${{ secrets.MP_TOKEN }}
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -52,5 +54,7 @@ jobs:
           TF_VAR_datasource_url: ${{ secrets.DATASOURCE_URL }}
           TF_VAR_datasource_username: ${{ secrets.DATASOURCE_USERNAME }}
           TF_VAR_datasource_password: ${{ secrets.DATASOURCE_PASSWORD }}
+          TF_VAR_mp_webhook: ${{ secrets.MP_WEBHOOK }}
+          TF_VAR_mp_token: ${{ secrets.MP_TOKEN }}
 
 
