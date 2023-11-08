@@ -1,0 +1,54 @@
+name: Deploy ECS infrastructure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        run: terraform init -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+
+      - name: Terraform Validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          TF_VAR_datasource_url: ${{ secrets.DATASOURCE_URL }}
+          TF_VAR_datasource_username: ${{ secrets.DATASOURCE_USERNAME }}
+          TF_VAR_datasource_password: ${{ secrets.DATASOURCE_PASSWORD }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          TF_VAR_datasource_url: ${{ secrets.DATASOURCE_URL }}
+          TF_VAR_datasource_username: ${{ secrets.DATASOURCE_USERNAME }}
+          TF_VAR_datasource_password: ${{ secrets.DATASOURCE_PASSWORD }}
