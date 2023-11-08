@@ -90,7 +90,7 @@ resource "aws_ecs_service" "tech_challenge_service" {
 
   network_configuration {
     subnets         = data.aws_subnets.this.ids
-    security_groups = [aws_security_group.ecs_security_group] # Especifique os grupos de segurança apropriados
+    security_groups = [aws_security_group.ecs_security_group.id] # Especifique os grupos de segurança apropriados
   }
 
   depends_on = [aws_security_group.ecs_security_group]
