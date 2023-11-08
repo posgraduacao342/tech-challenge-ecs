@@ -14,11 +14,11 @@ module "ecs" {
 }
 
 resource "aws_ecs_task_definition" "tech_challenge_api" {
-  family             = "tech-challenge-api"
-  network_mode       = "awsvpc"
-  execution_role_arn = "arn:aws:iam::623546275946:role/ecsTaskExecutionRole"
-  cpu                = "1024"
-  memory             = "3072"
+  family                   = "tech-challenge-api"
+  network_mode             = "awsvpc"
+  execution_role_arn       = "arn:aws:iam::623546275946:role/ecsTaskExecutionRole"
+  cpu                      = "1024"
+  memory                   = "3072"
   requires_compatibilities = ["FARGATE"]
 
   runtime_platform {
@@ -79,7 +79,7 @@ resource "aws_ecs_task_definition" "tech_challenge_api" {
         secretOptions = []
       }
 
-      
+
     }
   ])
 }
