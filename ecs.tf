@@ -28,6 +28,7 @@ resource "aws_ecs_cluster_capacity_providers" "example" {
 resource "aws_ecs_task_definition" "tech_challenge_api" {
   family                   = "tech-challenge-api"
   network_mode             = "awsvpc"
+  task_role_arn            = "arn:aws:iam::623546275946:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::623546275946:role/ecsTaskExecutionRole"
   cpu                      = "1024"
   memory                   = "3072"
