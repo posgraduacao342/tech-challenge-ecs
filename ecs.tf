@@ -88,6 +88,16 @@ resource "aws_ecs_service" "tech_challenge_service" {
   launch_type     = "FARGATE" # Ou "EC2" se você estiver usando EC2
   desired_count   = 3
 
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE"
+    weight            = 1
+  }
+
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 3
+  }
+
   network_configuration {
     subnets         = data.aws_subnets.this.ids
     security_groups = [aws_security_group.ecs_security_group.id] # Especifique os grupos de segurança apropriados
