@@ -90,11 +90,11 @@ resource "aws_ecs_service" "tech_challenge_service" {
   task_definition = aws_ecs_task_definition.tech_challenge_api.arn
   launch_type     = "FARGATE"
   desired_count   = 3
-  
+
 
   network_configuration {
-    subnets         = data.aws_subnets.this.ids
-    security_groups = [aws_security_group.ecs_security_group.id] # Especifique os grupos de segurança apropriados
+    subnets          = data.aws_subnets.this.ids
+    security_groups  = [aws_security_group.ecs_security_group.id] # Especifique os grupos de segurança apropriados
     assign_public_ip = true
   }
 
