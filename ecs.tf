@@ -19,6 +19,7 @@ resource "aws_ecs_task_definition" "tech_challenge_api" {
   execution_role_arn = "arn:aws:iam::623546275946:role/ecsTaskExecutionRole"
   cpu                = "1024"
   memory             = "3072"
+  requires_compatibilities = ["FARGATE"]
 
   runtime_platform {
     cpu_architecture        = "X86_64"
@@ -77,6 +78,8 @@ resource "aws_ecs_task_definition" "tech_challenge_api" {
         }
         secretOptions = []
       }
+
+      
     }
   ])
 }
