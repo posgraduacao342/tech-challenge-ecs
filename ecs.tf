@@ -85,18 +85,8 @@ resource "aws_ecs_service" "tech_challenge_service" {
   name            = "tech-challenge-service"
   cluster         = "arn:aws:ecs:us-east-1:623546275946:cluster/tech-challenge-cluster"
   task_definition = aws_ecs_task_definition.tech_challenge_api.arn
-  launch_type     = "FARGATE" # Ou "EC2" se você estiver usando EC2
+  launch_type     = "FARGATE"
   desired_count   = 3
-
-  capacity_provider_strategy {
-    capacity_provider = "FARGATE"
-    weight            = 1
-  }
-
-  capacity_provider_strategy {
-    capacity_provider = "FARGATE_SPOT"
-    weight            = 3
-  }
 
   network_configuration {
     subnets         = data.aws_subnets.this.ids
