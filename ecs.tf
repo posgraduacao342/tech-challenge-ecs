@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "tech_challenge_api" {
   container_definitions = jsonencode([
     {
       name      = "tech-challenge-api-container"
-      image     = "623546275946.dkr.ecr.us-east-1.amazonaws.com/tech-challenge-ecr:latest"
+      image     = "623546275946.dkr.ecr.us-east-1.amazonaws.com/tech-challenge-api:latest"
       essential = true
       portMappings = [
         {
