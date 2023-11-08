@@ -13,6 +13,18 @@ module "ecs" {
   }
 }
 
+resource "aws_ecs_cluster_capacity_providers" "example" {
+  cluster_name = module.ecs.cluster_name
+
+  capacity_providers = ["FARGATE"]
+
+  default_capacity_provider_strategy {
+    base              = 1
+    weight            = 100
+    capacity_provider = "FARGATE"
+  }
+}
+
 resource "aws_ecs_task_definition" "tech_challenge_api" {
   family                   = "tech-challenge-api"
   network_mode             = "awsvpc"
@@ -89,7 +101,7 @@ resource "aws_ecs_service" "tech_challenge_service" {
   cluster         = "arn:aws:ecs:us-east-1:623546275946:cluster/tech-challenge-cluster"
   task_definition = aws_ecs_task_definition.tech_challenge_api.arn
   launch_type     = "FARGATE"
-  desired_count   = 3
+  desired_count   = 1
 
 
   network_configuration {
