@@ -20,7 +20,7 @@ resource "aws_ecs_cluster_capacity_providers" "example" {
 
   default_capacity_provider_strategy {
     base              = 1
-    weight            = 100
+    weight            = 90
     capacity_provider = "FARGATE"
   }
 }
@@ -104,7 +104,7 @@ resource "aws_ecs_service" "tech_challenge_service" {
   capacity_provider_strategy {
     capacity_provider = "FARGATE"
     base              = 1
-    weight            = 100
+    weight            = 90
   }
 
   network_configuration {
